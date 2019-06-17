@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { User } from "./User";
 import { Properties } from "./Properties";
+import { Payments } from "./payments";
 
 @Entity()
 export class Bookings {
@@ -33,5 +34,8 @@ export class Bookings {
 
   @Column("datetime")
   updated_at
+
+  @OneToMany(type => Payments, payment => payment.booking)
+  payments: Payments[]
 
 }
