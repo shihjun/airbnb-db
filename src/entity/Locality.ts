@@ -1,22 +1,24 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Properties } from "./Properties";
-import { Comments } from "./Comments";
 
 
 @Entity()
-export class Owner {
+export class Locality {
 
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  name: string;
+  city: string;
 
   @Column()
-  email: string;
+  state: string;
 
   @Column()
-  contact_no: string;
+  country: string;
+
+  @Column()
+  postal_code: number;
 
   @Column("datetime")
   created_at
@@ -24,10 +26,7 @@ export class Owner {
   @Column("datetime")
   updated_at
 
-  @OneToMany(type => Properties, property => property.owner)
+  @OneToMany(type => Properties, property => property.locality)
   properties: Properties[]
-
-  @OneToMany(type => Comments, comment => comment.owner)
-  comments: Comments[]
 
 }

@@ -2,6 +2,8 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColum
 import { Bookings } from "./Bookings";
 import { Owner } from "./Owner";
 import { Properties_tags } from "./Properties_tags";
+import { Locality } from "./Locality";
+import { Reviews } from "./Reviews";
 
 @Entity()
 export class Properties {
@@ -10,11 +12,13 @@ export class Properties {
   id: number;
 
   @Column()
-  address: string;
+  unit_no: string;
 
-  @ManyToOne(type => Owner, owner => owner.properties)
-  @JoinColumn({ name: "owner_id" })
-  owner: Owner;
+  @Column()
+  building_name: string;
+
+  @Column()
+  street: string;
 
   @Column("datetime")
   created_at
@@ -27,5 +31,18 @@ export class Properties {
 
   @OneToMany(type => Properties_tags, properties_tag => properties_tag.property)
   properties_tags: Properties_tags[]
+
+  @OneToMany(type => Reviews, review => review.property)
+  reviews: Reviews[]
+
+  @ManyToOne(type => Owner, owner => owner.properties)
+  @JoinColumn({ name: "owner_id" })
+  owner: Owner;
+
+  @ManyToOne(type => Locality, locality => locality.properties)
+  @JoinColumn({ name: "location_id" })
+  locality: Locality;
+
+
 
 }
